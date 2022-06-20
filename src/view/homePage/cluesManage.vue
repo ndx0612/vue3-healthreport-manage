@@ -1,13 +1,12 @@
 <template>
-  <div>线索管理</div>
+  <div>
+    <span v-color>随机颜色</span>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>

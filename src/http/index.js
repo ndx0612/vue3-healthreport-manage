@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8;" // 配置请求头
 
 axios.defaults.baseURL = api.http // 配置接口地址
-console.log(axios.defaults.baseURL);
+// console.log(axios.defaults.baseURL);
 
 // 传参序列化(添加请求拦截器)
 axios.interceptors.request.use(
