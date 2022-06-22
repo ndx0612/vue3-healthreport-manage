@@ -1,6 +1,6 @@
 // 【自定义指令】v-draggable  拖拽
 
-export const draggable = {
+export default {
   inserted(el, binding, vnode) {
     el.style.cursor = 'move'
     el.onmousedown = e => {

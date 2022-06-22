@@ -1,14 +1,15 @@
 <template>
   <div>
     <span v-color>随机颜色</span>
-    <el-button type="primary" @click="exit">按钮</el-button>
+    <el-button type="primary" v-waves>按钮</el-button>
+
   </div>
 </template>
 
 <script setup>
 import { reactive, computed } from "vue";
 
-const exit = () => {
+const debounceClick = () => {
   console.log("object");
 };
 </script>
