@@ -1,4 +1,6 @@
-export const debounce = {
+// 【自定义指令】v-draggable  防抖
+
+export default {
   inserted(el, binding, vnode) {
     let timer = {}
     el.addEventListener('click', () => {
