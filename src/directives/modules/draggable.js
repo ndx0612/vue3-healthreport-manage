@@ -1,38 +1,35 @@
-// 【自定义指令】v-draggable  拖拽
-
 export default {
-  inserted(el, binding, vnode) {
-    el.style.cursor = 'move'
-    el.onmousedown = e => {
-      //算出鼠标相对元素的位置
-      let disx = e.pageX - el.offsetLeft
-      let disy = e.pageY - el.offsetTop
-      document.onmousemove = e => {
-        let x = e.pageX - disx
-        let y = e.pageY - disy
-        let maxX = document.body.clientWidth - parseInt(window.getComputedStyle(el).width)
-        let maxY = document.body.clientHeight - parseInt(window.getComputedStyle(el).height)
-        if (x < 0) {
-          x = 0
-        } else if (x > maxX) {
-          x = maxX
-        }
+  mounted(el) {
+    // 设置目标元素基础属性
+    el.style.cursor = 'move';
+    el.style.position = 'fixed';
 
-        if (y < 0) {
-          y = 0
-        } else if (y > maxY) {
-          y = maxY
-        }
+    // 监听鼠标在目标元素上按下        
+    el.addEventListener('mousedown', (e) => {
+      let { width, height } = el.getBoundingClientRect(el);
+      // 当前目标元素的left与top
+      const left = el.offsetLeft;
+      const top = el.offsetTop;
+      // 保存按下的鼠标的X与Y
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
 
-        el.style.left = x + 'px'
-        el.style.top = y + 'px'
-      };
-      document.onmouseup = e => {
-        //鼠标弹起来的时候不再移动
+      // 监听鼠标移动
+      document.onmousemove = (e) => {
+        // 鼠标移动的距离
+        let disX = e.clientX - mouseX;
+        let disY = e.clientY - mouseY;
+
+        el.style.left = (left + disX) + 'px';
+        el.style.top = (top + disY) + 'px';
+        return false // 防止选中文本，文本拖动的问题
+      }
+
+      // 监听鼠标抬起
+      document.onmouseup = () => {
         document.onmousemove = null;
-        //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
         document.onmouseup = null;
-      };
-    };
+      }
+    });
   }
 }
