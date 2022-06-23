@@ -1,3 +1,5 @@
+// 【自定义指令】v-draggable  拖拽
+
 export default {
   mounted(el) {
     // 设置目标元素基础属性

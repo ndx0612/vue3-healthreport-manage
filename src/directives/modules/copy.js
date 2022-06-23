@@ -1,3 +1,5 @@
+// 【自定义指令】v-copy  复制文字(目前不可用)
+
 export default {
   beforeMount(el, binding) {
     el.targetContent = binding.value;

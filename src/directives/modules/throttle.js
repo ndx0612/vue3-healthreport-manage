@@ -1,4 +1,5 @@
-// 原理：在持续触发事件时，在一定时间内只调用一次函数，，如果在规定时间内，再次触发此事件，则直接忽略不管。
+// 【自定义指令】v-throttle  节流(目前不可用)
+
 export default {
   inserted(el, delay) {
     Doms.push(el) // 使用el这个dom对象

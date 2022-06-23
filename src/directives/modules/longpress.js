@@ -1,3 +1,5 @@
+// 【自定义指令】v-longpress  长按
+
 export default {
   beforeMount(el, binding) {
     const cb = binding.value;

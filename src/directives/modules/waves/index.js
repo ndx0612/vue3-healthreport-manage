@@ -1,6 +1,6 @@
 // 【指令】v-waves  使按钮具有波纹效果
-import './waves.css'
 
+import './waves.css'
 export default {
   beforeMount(el, binding) {
     el.addEventListener('click', (e) => {
