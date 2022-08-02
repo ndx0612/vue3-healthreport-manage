@@ -1,6 +1,8 @@
 import HelloWorld from "./HelloWorld.vue"
+import GlobalTable from "./GlobalTable.vue"
 const globalComponents = [
   HelloWorld,
+  GlobalTable,
 ]
 export default {
   install(app) {

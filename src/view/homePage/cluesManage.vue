@@ -1,6 +1,6 @@
 <template>
-  <div>
-    线索管理
+  <div class="w-full h-full p-[20px]">
+    <GlobalTable></GlobalTable>
   </div>
 </template>
 

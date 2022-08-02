@@ -2,7 +2,7 @@
   <div class="homePage h-full w-full">
     <el-header class="flex h-[60px] items-center justify-between px-[20px] bg-[#FFF] border-[1px]">
       <div>
-        <span class="text-[26px]">校园健康日报后台管理系统</span>
+        <span class="text-[26px]">后台管理系统</span>
         <span class="text-[16px] ml-[10px]">版本号（1.0）</span>
       </div>
       <div class="flex items-center">
