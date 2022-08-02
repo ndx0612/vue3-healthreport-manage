@@ -23,11 +23,7 @@
         </el-menu>
       </el-aside>
       <el-main class="flex-1 h-full">
-        <!-- <router-view></router-view> -->
-        <keep-alive>
-          <router-view v-if="$route.meta.keepAlive"></router-view>
-        </keep-alive>
-        <router-view v-if="!$route.meta.keepAlive"></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </div>
