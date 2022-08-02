@@ -30,7 +30,7 @@
         <el-checkbox v-model="data.saveInfo" label="记住账号密码" color="#606266" />
         <el-link type="primary">忘记密码</el-link>
       </div>
-      <div class="mt-[10px] flex justify-center mt-[45px]">
+      <div class="flex justify-center mt-[45px]">
         <el-button class="w-[100%] h-[44px]" type="primary" @click="methods.login">登录</el-button>
       </div>
     </div>
