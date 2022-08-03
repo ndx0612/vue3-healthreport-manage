@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full border-[1px] bg-[#FFF] p-[20px]">
     <!-- header -->
-    <div class="w-full h-[40px]">
+    <div class="w-full h-[40px] flex items-center">
       <slot name="header"></slot>
     </div>
     <!-- table -->
