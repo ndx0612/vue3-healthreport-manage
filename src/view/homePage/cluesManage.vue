@@ -35,7 +35,7 @@ const printValue = (value) => {
 
 // 查询表单
 const form = reactive({
-  dictName: "etd", // 字典名称
+  dictName: "", // 字典名称
   dictType: 2, // 字典类型
   status: "", // 状态
   date: "", // 日期
