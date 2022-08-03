@@ -1,8 +1,10 @@
 import HelloWorld from "./HelloWorld.vue"
 import GlobalTable from "./GlobalTable.vue"
+import selectDept from "./select-dept.vue"
 const globalComponents = [
   HelloWorld,
   GlobalTable,
+  selectDept,
 ]
 export default {
   install(app) {

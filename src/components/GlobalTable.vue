@@ -2,14 +2,12 @@
   <div class="w-full h-full border-[1px] bg-[#FFF] p-[20px]">
     <!-- header -->
     <div class="w-full h-[40px]">
-      <el-button>新增</el-button>
+      <slot name="header"></slot>
     </div>
     <!-- table -->
     <div class="w-full" style="height: calc(100% - 40px - 56px);">
-      <el-table :data="tableData" border style="width: 100%" height="100%">
-        <el-table-column prop="date" label="Date" width="180" />
-        <el-table-column prop="name" label="Name" width="180" />
-        <el-table-column prop="address" label="Address" />
+      <el-table :data="tableData" border style="width: 100%" height="100%" v-loading="loading">
+        <slot name="table"></slot>
       </el-table>
     </div>
     <!-- bottom -->
@@ -21,7 +19,27 @@
 
 <script setup>
 import { ref, reactive, onMounted, getCurrentInstance, watch } from "vue";
+const { proxy } = getCurrentInstance();
+
 defineOptions({ name: "GlobalTable" });
+
+onMounted(() => {
+  getTable();
+});
+const props = defineProps({
+  // 请求url
+  resUrl: {
+    type: String,
+    required: true,
+  },
+  // 请求参数
+  parameter: {
+    type: Object,
+    required: false,
+  },
+});
+
+const loading = ref(false);
 
 const page = reactive({
   currentPage: 1, // 当前页面
@@ -29,33 +47,36 @@ const page = reactive({
   total: 146, // 总数
 });
 
-const tableData = [
-  {
-    date: "2016-05-03",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-02",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-];
+const tableData = ref([]);
 
 const handleSizeChange = (val) => {
-  console.log(`${val}条/每一页`);
+  getTable();
 };
 const handleCurrentChange = (val) => {
-  console.log(`当前页数: ${val}`);
+  getTable();
 };
+
+const getTable = () => {
+  loading.value = true;
+  proxy.$axios
+    .post(props.resUrl, {
+      pageNum: page.currentPage,
+      pageSize: page.pageSize,
+      ...props.parameter,
+    })
+    .then((res) => {
+      if (res.errCode == 0) {
+        console.log(res);
+        tableData.value = res.data.records;
+        page.total = res.data.total;
+      }
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
+
+defineExpose({
+  getTable,
+});
 </script>

@@ -1,3 +1,6 @@
+import { deepClone } from "outils";
+import { onUnmounted, ref, isRef, unref, watch } from "vue"
+
 const SIGN_REGEXP = /([yMdhsm])(\1*)/g
 const DEFAULT_PATTERN = "yyyy-MM-dd"
 // 个位日期补0
@@ -44,17 +47,54 @@ export default {
 			}
 		})
 	},
-	// 服务器资源-可能是本地服务器的相对路径，也可能是云服务器的绝对路径，统一处理
-	convertImgUrl: function (url) {
-		if (!url) return ""
-		if (
-			url &&
-			url.length > 8 &&
-			(url.substring(0, 7) == "http://" || url.substring(0, 8) == "https://")
-		) {
-			return url
-		} else {
-			return (process.env.VUE_APP_BASE_URL || 'http://wx.youxinedu.cn/health-report-java/') + url
+
+
+	/**
+	 * 
+	 * @description: 列表处理纯逻辑封装
+	 * @param {string} url 列表请求地址
+	 * @param {object} params 列表请求参数
+	 * @param {boolean} immediately 立马调用,注册时候就调用
+	 * @return {tableData, error, loading, total, getTableList}
+	 */
+	useTableList(url, params, immediately = true) {
+		const data = ref([])
+		const error = ref(null)
+		const total = ref(0)
+		const loading = ref(false)
+
+		function doRequest() {
+			// 在请求之前重设状态...
+			data.value = []
+			error.value = null
+			// unref() 解包可能为 ref 的值
+			loading.value = true
+			post(unref(url), _.cloneDeep(unref(params)))
+				.then((res) => {
+					console.log("res", res)
+					data.value = res?.data?.records || res?.records || []
+					total.value = res?.data?.total || res?.total || 0
+				})
+				.catch((err) => {
+					console.log("err", err)
+					error.value = err
+				})
+				.finally(() => {
+					loading.value = false
+				})
 		}
-	},
+
+		if (immediately) doRequest()
+		var unwatch = watch(params, (newValue, oldValue) => {
+			doRequest()
+		})
+
+		// 页面卸载 销毁监听
+		onUnmounted(() => {
+			unwatch()
+		})
+
+		return { tableData: data, error, loading, total, getTableList: doRequest }
+	}
+
 }
